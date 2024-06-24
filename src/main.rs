@@ -2,8 +2,6 @@ use rand::{self, Rng};
 use std::env;
 
 fn main() {
-    env::set_var("RUST_BACKTRACE", "full");
-
     let args: Vec<String> = env::args().collect();
 
     if args.len() != 3 {
@@ -21,13 +19,11 @@ fn main() {
     let random_number:u128 = rand::thread_rng().gen_range(1..=prime/2);
 
     let guess: u128 = random_number;
-    let mut working_guess: u128 = guess;
+    let working_guess: u128 = guess;
     let mut power: u32 = 2;
     
-    // Raises the random number to a power and keeps going untill the remainder is one
-    while working_guess % prime != 1{
-        //working_guess = u128::pow(working_guess,power);
-        working_guess = working_guess.checked_pow(power).expect("Overflow");
+    // Raises the random number to a power and keeps going until the remainder is one
+    while working_guess.checked_pow(power).expect("Overflow") % prime != 1{
         power +=1;
     }
 
@@ -39,6 +35,7 @@ fn main() {
 
 // Finds the GCD using Euclidean's Algorithm 
 fn find_gcl(prime: u128, mut number_a: u128, mut number_b: u128) {
+    println!("Finding the gratest common factor if {} and {}", number_a, number_b);
     if number_a > number_b {
         number_a = number_a % number_b;
         if number_a == 0 {
@@ -48,11 +45,11 @@ fn find_gcl(prime: u128, mut number_a: u128, mut number_b: u128) {
         number_b = number_b % number_a;
         if number_b == 0 {
             get_primes_from_guess(prime, number_a);
+        }
     }
 }
-}
 
-fn get_primes_from_guess(prime: u128,guess: u128) {
+fn get_primes_from_guess(prime: u128, guess: u128) {
     let prime1: u128 = prime/guess;
     let prime2: u128 = prime/prime1;
 
