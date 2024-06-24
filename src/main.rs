@@ -2,6 +2,8 @@ use rand::{self, Rng};
 use std::env;
 
 fn main() {
+    env::set_var("RUST_BACKTRACE", "full");
+
     let args: Vec<String> = env::args().collect();
 
     if args.len() != 3 {
@@ -24,13 +26,13 @@ fn main() {
     
     // Raises the random number to a power and keeps going untill the remainder is one
     while working_guess % prime != 1{
-        working_guess = u128::pow(working_guess,power);
+        //working_guess = u128::pow(working_guess,power);
+        working_guess = working_guess.checked_pow(power).expect("Overflow");
         power +=1;
     }
 
     let number_a: u128 = prime;
     let number_b: u128 = u128::pow(guess, {power/2}.try_into().unwrap())+1;
-
 
     find_gcl(prime, number_a, number_b);
 }
