@@ -16,14 +16,12 @@ fn main() {
 
     // Calculates the number that will be cracked
     let prime: u128 = arg_prime_1*arg_prime_2; 
-    let random_number:u128 = rand::thread_rng().gen_range(1..=prime/2);
-
-    let guess: u128 = random_number;
-    let working_guess: u128 = guess;
+    let guess:u128 = rand::thread_rng().gen_range(1..=prime/2);
+    
     let mut power: u32 = 2;
     
     // Raises the random number to a power and keeps going until the remainder is one
-    while working_guess.checked_pow(power).expect("Overflow") % prime != 1{
+    while guess.checked_pow(power).expect("Overflow") % prime != 1{
         power +=1;
     }
 
