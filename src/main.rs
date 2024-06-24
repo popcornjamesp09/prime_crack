@@ -15,11 +15,15 @@ fn main() {
         power +=1;
     }
 
-    let mut number_a: u128 = prime.clone();
-    let mut number_b: u128 = u128::pow(guess, power/2)+1;
-    let mut total: bool = true;
+    let number_a: u128 = prime;
+    let number_b: u128 = u128::pow(guess, power/2)+1;
 
-    // Finds the GCD using Euclidean's Algorithm 
+    find_gcl(prime, number_a, number_b);
+}
+
+// Finds the GCD using Euclidean's Algorithm 
+fn find_gcl(prime: u128, mut number_a: u128, mut number_b: u128) {
+    let mut total: bool = true;
     while total {
         if number_a > number_b {
             number_a = number_a % number_b;
