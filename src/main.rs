@@ -1,6 +1,8 @@
 use rand::{self, Rng};
 use std::env;
 
+// Why are you here?
+
 fn main() {
     let args: Vec<String> = env::args().collect();
 
@@ -25,24 +27,25 @@ fn main() {
         power +=1;
     }
 
-    let number_a: u128 = prime;
     let number_b: u128 = u128::pow(guess, {power/2}.try_into().unwrap())+1;
 
-    find_gcl(prime, number_a, number_b);
+    find_gcl(prime, prime, number_b);
 }
 
 // Finds the GCD using Euclidean's Algorithm 
 fn find_gcl(prime: u128, mut number_a: u128, mut number_b: u128) {
-    println!("Finding the gratest common factor if {} and {}", number_a, number_b);
-    if number_a > number_b {
-        number_a = number_a % number_b;
-        if number_a == 0 {
-            get_primes_from_guess(prime, number_b);
-        }
-    } else if number_b > number_a {
-        number_b = number_b % number_a;
-        if number_b == 0 {
-            get_primes_from_guess(prime, number_a);
+    loop {
+        println!("Finding the gratest common factor if {} and {}", number_a, number_b);
+        if number_a > number_b {
+            number_a = number_a % number_b;
+            if number_a == 0 {
+                get_primes_from_guess(prime, number_b);
+            }
+        } else if number_b > number_a {
+            number_b = number_b % number_a;
+            if number_b == 0 {
+                get_primes_from_guess(prime, number_a);
+            }
         }
     }
 }
