@@ -1,8 +1,6 @@
 use rand::{self, Rng};
 use std::env;
 
-// Why are you here?
-
 fn main() {
     let args: Vec<String> = env::args().collect();
 
@@ -11,6 +9,7 @@ fn main() {
         println!("       prime1  - The first prime number that you want");
         println!("       prime2  - The second prime number that you want");
         println!("This program finds the two prime numbers provided after multiplying them together.");
+        panic!("Read usage")
     }
     
     let arg_prime_1: u128 = args[1].trim().parse().expect("Enter a number");
@@ -27,7 +26,7 @@ fn main() {
         power +=1;
     }
 
-    let number_b: u128 = u128::pow(guess, {power/2}.try_into().unwrap())+1;
+    let number_b: u128 = u128::pow(guess, power/2)+1;
 
     find_gcl(prime, prime, number_b);
 }
@@ -35,7 +34,6 @@ fn main() {
 // Finds the GCD using Euclidean's Algorithm 
 fn find_gcl(prime: u128, mut number_a: u128, mut number_b: u128) {
     loop {
-        println!("Finding the gratest common factor if {} and {}", number_a, number_b);
         if number_a > number_b {
             number_a = number_a % number_b;
             if number_a == 0 {
