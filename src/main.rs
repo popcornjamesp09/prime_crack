@@ -23,7 +23,7 @@ fn main() {
 
     // Calculates the number that will be cracked
     let range: u128 = arg_prime_1*arg_prime_2; 
-    let guess: BigInt = BigInt::from(rand::thread_rng().gen_range(1..=(&range/2)));
+    let guess: BigInt = BigInt::from(rand::thread_rng().gen_range(1..=range.clone()));
 
     let prime: BigInt = BigInt::from(range);
 
@@ -32,6 +32,7 @@ fn main() {
     
     // Raises the random number to a power and keeps going until the remainder is one
     while BigInt::pow(&guess, power) % &prime != BigInt::one() {
+        if power >= 100 {main()}
         power +=1;
     }
 
@@ -70,5 +71,6 @@ fn get_primes_from_guess(prime: BigInt, guess: BigInt) {
         main()
     }
 
-    println!("The prime numbers are {}, {}", prime1, prime2)
+    println!("The prime numbers are {}, {}", prime1, prime2);
+    std::process::exit(0)
 }
