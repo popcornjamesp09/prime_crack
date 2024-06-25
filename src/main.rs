@@ -1,5 +1,11 @@
+extern crate num_bigint;
+extern crate num_traits;
+
+use num_traits::{Zero, One};
 use rand::{self, Rng};
 use std::env;
+
+use num_bigint::BigInt;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -16,45 +22,51 @@ fn main() {
     let arg_prime_2: u128 = args[2].trim().parse().expect("Enter a number");
 
     // Calculates the number that will be cracked
-    let prime: u128 = arg_prime_1*arg_prime_2; 
-    let guess:u128 = rand::thread_rng().gen_range(1..=prime/2);
+    let range: u128 = arg_prime_1*arg_prime_2; 
+    let guess: BigInt = BigInt::from(rand::thread_rng().gen_range(1..=(&range/2)));
+
+    let prime: BigInt = BigInt::from(range);
+
     
     let mut power: u32 = 2;
     
     // Raises the random number to a power and keeps going until the remainder is one
-    while guess.checked_pow(power).expect("Overflow") % prime != 1{
+    while BigInt::pow(&guess, power) % &prime != BigInt::one() {
         power +=1;
     }
 
-    let number_b: u128 = u128::pow(guess, power/2)+1;
+    let number_b: BigInt = BigInt::pow(&guess, power/2)+1;
 
-    find_gcl(prime, prime, number_b);
+    find_gcl(prime.clone(), prime, number_b);
 }
 
 // Finds the GCD using Euclidean's Algorithm 
-fn find_gcl(prime: u128, mut number_a: u128, mut number_b: u128) {
+fn find_gcl(prime: BigInt, mut number_a: BigInt, mut number_b: BigInt) {
     loop {
         if number_a > number_b {
-            number_a = number_a % number_b;
-            if number_a == 0 {
+            number_a = number_a % number_b.clone();
+            if number_a == BigInt::zero() {
                 get_primes_from_guess(prime, number_b);
+                break
             }
         } else if number_b > number_a {
-            number_b = number_b % number_a;
-            if number_b == 0 {
+            number_b = number_b % number_a.clone();
+            if number_b == BigInt::zero() {
                 get_primes_from_guess(prime, number_a);
+                break
             }
         }
     }
+    
 }
 
-fn get_primes_from_guess(prime: u128, guess: u128) {
-    let prime1: u128 = prime/guess;
-    let prime2: u128 = prime/prime1;
+fn get_primes_from_guess(prime: BigInt, guess: BigInt) {
+    let prime1: BigInt = &prime/guess;
+    let prime2: BigInt = &prime/&prime1;
 
-    if prime == prime1 {
+    if &prime == &prime1 {
         main()
-    } else if prime == prime2 {
+    } else if &prime == &prime2 {
         main()
     }
 
