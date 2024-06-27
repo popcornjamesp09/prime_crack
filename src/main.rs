@@ -23,7 +23,7 @@ fn main() {
 
     // Calculates the number that will be cracked
     let range: u128 = arg_prime_1*arg_prime_2; 
-    let guess: BigInt = BigInt::from(rand::thread_rng().gen_range(1..=range.clone()));
+    let guess: BigInt = BigInt::from(rand::thread_rng().gen_range(1..=range));
 
     let prime: BigInt = BigInt::from(range);
 
