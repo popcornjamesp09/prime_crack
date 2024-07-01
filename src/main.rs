@@ -12,8 +12,6 @@ fn main() {
 
     if args.len() != 3 {
         println!("Usage: prime_crack <prime1> <prime2>");
-        println!("       prime1  - The first prime number that you want");
-        println!("       prime2  - The second prime number that you want");
         println!("This program finds the two prime numbers provided after multiplying them together.");
         panic!("Read usage")
     }
@@ -22,12 +20,11 @@ fn main() {
     let arg_prime_2: u128 = args[2].trim().parse().expect("Enter a number");
 
     // Calculates the number that will be cracked
-    let range: u128 = arg_prime_1*arg_prime_2; 
+    let range: u128 = arg_prime_1*arg_prime_2;
     let guess: BigInt = BigInt::from(rand::thread_rng().gen_range(1..=range));
 
     let prime: BigInt = BigInt::from(range);
 
-    
     let mut power: u32 = 2;
     
     // Raises the random number to a power and keeps going until the remainder is one
